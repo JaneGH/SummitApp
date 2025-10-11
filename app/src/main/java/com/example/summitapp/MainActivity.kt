@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.summitapp.databinding.ActivityMainBinding
 import com.example.summitapp.fragments.CategoryListFragment
 import com.example.summitapp.fragments.ProfileFragment
+import com.example.summitapp.model.Category
 
 class MainActivity : AppCompatActivity() {
 

@@ -4,4 +4,8 @@
         <item name="android:textSize">19sp</item>
         <item name="android:textColor">@color/dark_gray</item>
     </style>
+    <style name="CircleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
