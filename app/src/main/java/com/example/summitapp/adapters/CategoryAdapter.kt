@@ -1,4 +1,4 @@
-package com.example.summitapp
+package com.example.summitapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,8 @@ import com.example.summitapp.databinding.ItemCategoryBinding
 import com.example.summitapp.model.Category
 
 class CategoryAdapter(
-    val categoryList : List<Category>
+    val categoryList : List<Category>,
+    private val onItemClick: (Category) ->Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,6 +32,10 @@ class CategoryAdapter(
     inner class CategoryViewHolder(private val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
             binding.tvTitle.text = category.title
+            binding.root.setOnClickListener {
+                onItemClick(category)
+            }
         }
+
     }
 }

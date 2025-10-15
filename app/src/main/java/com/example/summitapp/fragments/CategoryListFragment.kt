@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.summitapp.CategoryAdapter
+import com.example.summitapp.R
+import com.example.summitapp.adapters.CategoryAdapter
 import com.example.summitapp.databinding.FragmentCategoryLystBinding
 import com.example.summitapp.model.Category
 
@@ -22,9 +23,6 @@ class CategoryListFragment : Fragment() {
         Category(1, "Kids Wear"),
         Category(2, "Grocery")
     )
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +34,24 @@ class CategoryListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = CategoryAdapter(categories)
+        val adapter = CategoryAdapter(categories){ selectedCategory ->
+            openProductsFragment(selectedCategory)
+        }
         binding.rvCategories.adapter = adapter
         binding.rvCategories.layoutManager = GridLayoutManager(requireContext(),2)
+    }
+
+    private fun openProductsFragment(category: Category) {
+        val fragment = ProductFragment()
+
+        val bundle = Bundle()
+        bundle.putLong("category_id", category.id)
+        bundle.putString("category_title", category.title)
+        fragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
