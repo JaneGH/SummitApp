@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.summitapp.databinding.ItemCategoryBinding
-import com.example.summitapp.model.Category
+import com.example.summitapp.data.local.entity.Category
 
 class CategoryAdapter(
     val categoryList : List<Category>,

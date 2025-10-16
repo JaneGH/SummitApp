@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/imageProduct"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Product Title"
-        android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textColor="@color/md_orange_500"
         app:layout_constraintStart_toEndOf="@id/imageProduct"
         app:layout_constraintTop_toTopOf="@id/imageProduct"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,11 +43,66 @@
         android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$9.99"
-        android:textColor="@android:color/holo_green_dark"
-        android:textStyle="bold"
-        android:textSize="15sp"
+        android:text="$0.00"
+        android:textColor="@color/md_orange_500"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/tvDescription"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/btnAddToCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_cart"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/quantityContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/btnMinus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="@string/minus_symbol"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:background="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/etQuantity"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="0"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
+            android:layout_marginHorizontal="4dp"
+            android:maxLines="1"
+            android:importantForAccessibility="yes" />
+
+        <TextView
+            android:id="@+id/btnPlus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="@string/plus_symbol"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:background="@color/colorPrimary" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

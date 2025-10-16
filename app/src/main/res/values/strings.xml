@@ -10,4 +10,7 @@
     <string name="categories">Categories</string>
     <string name="category">Category</string>
     <string name="category_image">Category Image</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="minus_symbol">-</string>
+    <string name="plus_symbol">+</string>
 </resources>

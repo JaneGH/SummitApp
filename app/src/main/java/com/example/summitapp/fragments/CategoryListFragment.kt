@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.summitapp.R
 import com.example.summitapp.adapters.CategoryAdapter
 import com.example.summitapp.databinding.FragmentCategoryLystBinding
-import com.example.summitapp.model.Category
+import com.example.summitapp.data.local.entity.Category
 
 class CategoryListFragment : Fragment() {
 
