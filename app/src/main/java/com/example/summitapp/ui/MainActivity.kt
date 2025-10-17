@@ -1,4 +1,5 @@
-package com.example.summitapp
+package com.example.summitapp.ui
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.SystemBarStyle
@@ -6,10 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.example.summitapp.Constants
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.summitapp.R
 import com.example.summitapp.databinding.ActivityMainBinding
 import com.example.summitapp.fragments.CategoryListFragment
 import com.example.summitapp.fragments.ProfileFragment
-import com.example.summitapp.data.local.entity.Category
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,15 +21,36 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(
-                getColor(R.color.colorPrimary)
+        val splashScreen = installSplashScreen()
+
+        splashScreen.setOnExitAnimationListener { splashScreenView ->
+            splashScreenView.iconView.animate()
+                .alpha(0f)
+                .setDuration(500)
+                .withEndAction {
+                    splashScreenView.remove()
+                    proceedWithNextSteps()
+                }
+        }
+
+    }
+
+    private fun proceedWithNextSteps() {
+        val pref = getSharedPreferences(Constants.SETTING, MODE_PRIVATE)
+        val hasLoggedIn = pref.getBoolean(Constants.LOGGED_IN,false)
+        if (!hasLoggedIn) {
+            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            finish()
+        } else {
+
+            enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.dark(
+                    getColor(R.color.colorPrimary)
+                )
             )
-        )
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        initView()
-        if (savedInstanceState == null) {
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+            initView()
             openFragment(CategoryListFragment())
         }
     }
