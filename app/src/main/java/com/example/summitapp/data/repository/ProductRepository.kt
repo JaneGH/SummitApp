@@ -9,9 +9,9 @@ class ProductRepository(
     private val productDao: ProductDao
 ) {
 
-    fun getProducts(): List<Product> {
+    fun getProducts(q:String): List<Product> {
         return try {
-            val response = apiService.getProducts().execute()
+            val response = apiService.getProducts(q).execute()
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null && body.status == 0) {

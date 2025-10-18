@@ -21,5 +21,5 @@ data class Category(
     val categoryName: String,
 
     @SerializedName("is_active")
-    val isActive: String
+    val isActive: String?
 )

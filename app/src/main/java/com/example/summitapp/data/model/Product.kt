@@ -24,7 +24,7 @@ data class Product(
     val price: Double,
 
     @SerializedName("is_active")
-    val isActive: String,
+    val isActive: String?,
 
     @SerializedName("image_url")
     val imageUrl: String? = null

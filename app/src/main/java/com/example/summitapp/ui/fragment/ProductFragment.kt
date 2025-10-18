@@ -12,16 +12,20 @@ import com.example.summitapp.ui.adapter.ProductAdapter
 import com.example.summitapp.data.local.database.AppDatabase
 import com.example.summitapp.databinding.FragmentProductBinding
 import com.example.summitapp.data.model.Product
+import com.example.summitapp.data.remote.ApiService
+import com.example.summitapp.data.repository.ProductRepository
 
 class ProductFragment : Fragment() {
 
 
     private lateinit var binding : FragmentProductBinding
     private lateinit var productDao : ProductDao
-    private val products = listOf(
-        Product(0, 1, "Xiaomi 17", "The Xiaomi 17 is a high-performance smartphone that combines cutting-edge features with sleek design. It typically offers a powerful chipset, a high-resolution display, and an improved camera system for enhanced photography.", 200.00, "https://crdms.images.consumerreports.org/f_auto,w_1200/prod/products/cr/models/399694-smartphones-apple-iphone-11-10008711.png"),
-        Product(0, 1, "Apple iPhone Air", "is a lightweight and slim smartphone, offering a balance of performance and portability. It typically features a high-resolution Retina display, Apple's powerful A-series chip, and an advanced camera system.", 200.00, "https://crdms.images.consumerreports.org/f_auto,w_1200/prod/products/cr/models/399694-smartphones-apple-iphone-11-10008711.png"),
-        )
+
+    private lateinit var productRepository: ProductRepository
+
+    private lateinit var productAdapter: ProductAdapter
+
+    private val products = mutableListOf<Product>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +40,7 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val productAdapter = ProductAdapter(products) { product, quantity, sign ->
+        productAdapter = ProductAdapter(products) { product, quantity, sign ->
             if (sign == "minus") {
                 productDao.deleteProduct(product.productId)
                 println("!!! ${productDao.getAllProducts().size}")
@@ -51,12 +55,27 @@ class ProductFragment : Fragment() {
 
         val itemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.rvProducts.addItemDecoration(itemDecoration)
+        loadProducts()
 
     }
 
     private fun initDB() {
         val db = AppDatabase.getInstance(requireContext())
-       productDao = db.ProductDao()
+        productDao = db.ProductDao()
+        productRepository = ProductRepository(ApiService.getInstance(), productDao)
+
+    }
+
+    private fun loadProducts() {
+        Thread {
+            if (!isAdded) return@Thread
+            val productsFromRepo = productRepository.getProducts("")
+            requireActivity().runOnUiThread {
+                products.clear()
+                products.addAll(productsFromRepo)
+                productAdapter.notifyDataSetChanged()
+            }
+        }.start()
     }
 
 }

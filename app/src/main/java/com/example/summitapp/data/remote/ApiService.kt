@@ -10,6 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -29,10 +30,10 @@ interface ApiService {
     fun getCategories(
     ): Call<CategoryResponse>
 
-    @GET("Products")
+    @GET("product/search")
     fun getProducts(
+        @Query("query") query: String
     ): Call<ProductResponse>
-
 
     companion object {
         fun getInstance(): ApiService {
