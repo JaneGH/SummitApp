@@ -1,6 +1,6 @@
 
 package com.example.summitapp.data.remote.response
-import com.example.summitapp.data.local.entity.Product
+import com.example.summitapp.data.model.Product
 import com.google.gson.annotations.SerializedName
 
 data class ProductResponse(

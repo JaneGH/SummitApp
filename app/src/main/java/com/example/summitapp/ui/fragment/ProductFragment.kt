@@ -11,7 +11,7 @@ import com.example.summitapp.data.local.dao.ProductDao
 import com.example.summitapp.ui.adapter.ProductAdapter
 import com.example.summitapp.data.local.database.AppDatabase
 import com.example.summitapp.databinding.FragmentProductBinding
-import com.example.summitapp.data.local.entity.Product
+import com.example.summitapp.data.model.Product
 
 class ProductFragment : Fragment() {
 
@@ -38,7 +38,7 @@ class ProductFragment : Fragment() {
 
         val productAdapter = ProductAdapter(products) { product, quantity, sign ->
             if (sign == "minus") {
-                productDao.deleteProduct(product.id)
+                productDao.deleteProduct(product.productId)
                 println("!!! ${productDao.getAllProducts().size}")
             } else {
                 productDao.insertProduct(product)

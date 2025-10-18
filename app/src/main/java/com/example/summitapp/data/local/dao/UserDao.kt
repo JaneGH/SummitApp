@@ -3,7 +3,8 @@ package com.example.summitapp.data.local.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.summitapp.data.local.entity.User
+import com.example.summitapp.data.model.User
+
 
 @Dao
 interface UserDao {

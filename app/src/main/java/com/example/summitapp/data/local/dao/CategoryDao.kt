@@ -4,7 +4,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.ecommersproject.model.Category
+import com.example.summitapp.data.model.Category
 
 @Dao
 interface CategoryDao {

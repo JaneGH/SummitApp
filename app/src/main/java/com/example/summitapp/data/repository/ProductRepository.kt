@@ -1,32 +1,32 @@
 package com.example.summitapp.data.repository
 
-import com.example.summitapp.data.local.entity.Product
+import com.example.summitapp.data.local.dao.ProductDao
+import com.example.summitapp.data.model.Product
 import com.example.summitapp.data.remote.ApiService
-import com.example.summitapp.data.remote.response.ProductResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class ProductRepository(private val apiService: ApiService) {
+class ProductRepository(
+    private val apiService: ApiService,
+    private val productDao: ProductDao
+) {
 
-    fun getProducts(callback: (List<Product>?, String?) -> Unit) {
-        apiService.getProducts().enqueue(object : Callback<ProductResponse> {
-            override fun onResponse(call: Call<ProductResponse>, response: Response<ProductResponse>) {
-                if (response.isSuccessful) {
-                    val productResponse = response.body()
-                    if (productResponse != null && productResponse.status == 0) {
-                        callback(productResponse.products, null)
-                    } else {
-                        callback(null, "Error: ${productResponse?.message}")
-                    }
+    fun getProducts(): List<Product> {
+        return try {
+            val response = apiService.getProducts().execute()
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null && body.status == 0) {
+                    val products = body.products
+                    productDao.clearAll()
+                    productDao.insertAllProducts(products)
+                    productDao.getAllProducts()
                 } else {
-                    callback(null, "Error: ${response.code()} ${response.message()}")
+                    productDao.getAllProducts()
                 }
+            } else {
+                productDao.getAllProducts()
             }
-
-            override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
-                callback(null, "Failed to fetch products. Please retry.")
-            }
-        })
+        } catch (e: Exception) {
+            productDao.getAllProducts()
+        }
     }
 }

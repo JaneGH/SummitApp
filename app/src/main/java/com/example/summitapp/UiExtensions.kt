@@ -7,9 +7,11 @@ fun AppCompatActivity.showMessage(
     title: String,
     message: String
 ) {
-    AlertDialog.Builder(this)
-        .setTitle(title)
-        .setMessage(message)
-        .create()
-        .show()
+    if (!isFinishing && !isDestroyed) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .create()
+            .show()
+    }
 }

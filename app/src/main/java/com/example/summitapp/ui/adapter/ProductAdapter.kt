@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.summitapp.databinding.ItemProductBinding
-import com.example.summitapp.data.local.entity.Product
+import com.example.summitapp.data.model.Product
 
 class ProductAdapter(
     val productList : List<Product>,
@@ -16,7 +16,7 @@ class ProductAdapter(
 
     inner class ProductViewHolder(val binding : ItemProductBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(product: Product) {
-            binding.tvTitle.text = product.title
+            binding.tvTitle.text = product.productName
             binding.tvDescription.text = product.description
             binding.tvPrice.text = product.price.toString()
             Glide.with(binding.root.context)

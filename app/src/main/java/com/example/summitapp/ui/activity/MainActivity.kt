@@ -1,4 +1,5 @@
 package com.example.summitapp.ui.activity
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,6 +12,7 @@ import com.example.summitapp.Constants
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.summitapp.R
 import com.example.summitapp.databinding.ActivityMainBinding
+import com.example.summitapp.databinding.NavHeaderBinding
 import com.example.summitapp.ui.fragment.CategoryListFragment
 import com.example.summitapp.ui.fragment.ProfileFragment
 
@@ -24,13 +26,24 @@ class MainActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
 
         splashScreen.setOnExitAnimationListener { splashScreenView ->
-            splashScreenView.iconView.animate()
-                .alpha(0f)
-                .setDuration(500)
-                .withEndAction {
-                    splashScreenView.remove()
-                    proceedWithNextSteps()
-                }
+            val iconView = try {
+                splashScreenView.iconView
+            } catch (e: NullPointerException) {
+                null
+            }
+
+            if (iconView != null) {
+                iconView.animate()
+                    .alpha(0f)
+                    .setDuration(500)
+                    .withEndAction {
+                        splashScreenView.remove()
+                        proceedWithNextSteps()
+                    }
+            } else {
+                splashScreenView.remove()
+                proceedWithNextSteps()
+            }
         }
 
     }
@@ -55,12 +68,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_outline_menu_24)
         }
+
+        val pref = getSharedPreferences(Constants.SETTING, MODE_PRIVATE)
+        val headerBinding = NavHeaderBinding.bind(binding.navView.getHeaderView(0))
+        val fullName = pref.getString(Constants.FULL_NAME, "")
+        headerBinding.tvGreeting.text = "Hello, $fullName"
+        headerBinding.tvEmail.text = pref.getString(Constants.EMAIL_ID,"")
+        headerBinding.tvPhone.text = pref.getString(Constants.MOBILE_NO,"")
 
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true

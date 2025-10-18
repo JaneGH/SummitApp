@@ -1,5 +1,4 @@
-package com.example.ecommersproject.model
-
+package com.example.summitapp.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

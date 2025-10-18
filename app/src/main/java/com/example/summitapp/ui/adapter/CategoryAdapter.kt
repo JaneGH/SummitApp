@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.ecommersproject.model.Category
 import com.example.summitapp.R
+import com.example.summitapp.data.model.Category
 import com.example.summitapp.databinding.ItemCategoryBinding
 
 class CategoryAdapter(

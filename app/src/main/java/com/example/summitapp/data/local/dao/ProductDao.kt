@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.summitapp.data.local.entity.Product
+import com.example.summitapp.data.model.Product
 
 
 @Dao
@@ -16,15 +16,18 @@ interface ProductDao {
     @Insert
     fun insertAllProducts(products: List<Product>)
 
+    @Query("DELETE FROM product")
+    fun clearAll()
+
     @Query("SELECT * FROM product")
     fun getAllProducts(): List<Product>
 
     @Update
     fun updateProduct(product: Product)
 
-    @Query("SELECT * FROM product WHERE id = :productId")
-    fun getProductById(productId: Long): Product
+    @Query("SELECT * FROM product WHERE productId = :productId")
+    fun getProductById(productId: Int): Product
 
-    @Query("DELETE FROM product WHERE id = :productId")
-    fun deleteProduct(productId: Long)
+    @Query("DELETE FROM product WHERE productId = :productId")
+    fun deleteProduct(productId: Int)
 }

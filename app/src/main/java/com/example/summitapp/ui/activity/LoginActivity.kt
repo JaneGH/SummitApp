@@ -69,12 +69,15 @@ class LoginActivity : AppCompatActivity() {
                 if (result != null) {
                     if (result.status == 0) {
                         val pref = getSharedPreferences(Constants.SETTING, MODE_PRIVATE)
-                        pref.edit{
+                        pref.edit(commit = true) {
                             putBoolean(Constants.LOGGED_IN, true)
-                            putString(Constants.FULL_NAME, response.body()?.user?.fullName)
+                            putString(Constants.FULL_NAME, response.body()?.user?.fullName ?: "")
+                            putString(Constants.EMAIL_ID, response.body()?.user?.emailId ?: "")
+                            putString(Constants.MOBILE_NO, response.body()?.user?.mobileNo ?: "")
                         }
-                        showMessage("Success", result.message)
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
                         finish()
                     } else {
                         showMessage("Error", result.message)

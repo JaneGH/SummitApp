@@ -1,5 +1,5 @@
 package com.example.summitapp.data.remote.response
-import com.example.ecommersproject.model.User
+import com.example.summitapp.data.model.User
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(

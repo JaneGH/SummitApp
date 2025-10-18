@@ -1,7 +1,7 @@
 package com.example.summitapp.data.repository
 
-import com.example.ecommersproject.model.Category
 import com.example.summitapp.data.local.dao.CategoryDao
+import com.example.summitapp.data.model.Category
 import com.example.summitapp.data.remote.ApiService
 
 class CategoryRepository

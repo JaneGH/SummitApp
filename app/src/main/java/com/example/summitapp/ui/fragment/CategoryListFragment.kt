@@ -6,17 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.ecommersproject.model.Category
 import com.example.summitapp.R
-import com.example.summitapp.data.local.dao.CategoryDao
 import com.example.summitapp.data.local.database.AppDatabase
+import com.example.summitapp.data.model.Category
 import com.example.summitapp.ui.adapter.CategoryAdapter
 import com.example.summitapp.databinding.FragmentCategoryLystBinding
 import com.example.summitapp.data.remote.ApiService
 import com.example.summitapp.data.repository.CategoryRepository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 class CategoryListFragment : Fragment() {
 
@@ -27,14 +24,6 @@ class CategoryListFragment : Fragment() {
     private lateinit var categoriesAdapter: CategoryAdapter
 
     private val categories = mutableListOf<Category>()
-//    private val categories = listOf(
-//        Category(1, "Smart Phones"),
-//        Category(2, "Laptops"),
-//        Category(3, "Drinks", "https://en.wikipedia.org/wiki/Coca-Cola#/media/File:Coca_Cola_Flasche_-_Original_Taste.jpg"),
-//        Category(4, "Soft Drinks", "https://en.wikipedia.org/wiki/Coca-Cola#/media/File:Coca_Cola_Flasche_-_Original_Taste.jpg"),
-//        Category(1, "Kids Wear"),
-//        Category(2, "Grocery")
-//    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

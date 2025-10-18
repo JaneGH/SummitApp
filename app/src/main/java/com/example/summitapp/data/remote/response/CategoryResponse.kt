@@ -1,6 +1,6 @@
 
 package com.example.summitapp.data.remote.response
-import com.example.ecommersproject.model.Category
+import com.example.summitapp.data.model.Category
 import com.google.gson.annotations.SerializedName
 
 data class CategoryResponse(

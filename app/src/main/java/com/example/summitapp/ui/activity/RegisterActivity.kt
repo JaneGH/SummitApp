@@ -82,11 +82,18 @@ class RegisterActivity : AppCompatActivity() {
                 val result = response.body()
                 if (result != null) {
                     val pref = getSharedPreferences(Constants.SETTING, MODE_PRIVATE)
-                    pref.edit{
+                    pref.edit(commit = true) {
                         putBoolean(Constants.LOGGED_IN, true)
                         putString(Constants.FULL_NAME, binding.etFullName.text.toString())
+                        putString(Constants.EMAIL_ID, binding.etEmail.text.toString())
+                        putString(Constants.MOBILE_NO, binding.etMobile.text.toString())
                     }
-                    showMessage("Success", result.message)
+
+                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+
                 } else {
                     showMessage("Error", "Empty response from server")
                 }
