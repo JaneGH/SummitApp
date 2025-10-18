@@ -1,4 +1,4 @@
-package com.example.summitapp.fragments
+package com.example.summitapp.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.summitapp.adapters.ProductAdapter
 import com.example.summitapp.data.local.dao.ProductDao
+import com.example.summitapp.ui.adapter.ProductAdapter
 import com.example.summitapp.data.local.database.AppDatabase
 import com.example.summitapp.databinding.FragmentProductBinding
 import com.example.summitapp.data.local.entity.Product
@@ -39,10 +39,10 @@ class ProductFragment : Fragment() {
         val productAdapter = ProductAdapter(products) { product, quantity, sign ->
             if (sign == "minus") {
                 productDao.deleteProduct(product.id)
-                println("!!! ${productDao.allProducts.size}")
+                println("!!! ${productDao.getAllProducts().size}")
             } else {
                 productDao.insertProduct(product)
-                println("!!! ${productDao.allProducts.size}")
+                println("!!! ${productDao.getAllProducts().size}")
             }
         }
 

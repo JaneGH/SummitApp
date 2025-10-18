@@ -1,4 +1,4 @@
-package com.example.summitapp.ui
+package com.example.summitapp.ui.activity
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,11 +1,11 @@
 
 package com.example.summitapp.data.remote.response
-import com.example.summitapp.data.local.entity.Category
+import com.example.summitapp.data.local.entity.Product
 import com.google.gson.annotations.SerializedName
 
-data class CategoriesResponse(
-    @SerializedName("categories")
-    val categories: List<Category>,
+data class ProductResponse(
+    @SerializedName("products")
+    val products: List<Product>,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")

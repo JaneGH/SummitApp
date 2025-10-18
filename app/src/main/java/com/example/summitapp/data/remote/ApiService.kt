@@ -1,8 +1,9 @@
 package com.example.summitapp.data.remote
 import com.example.summitapp.data.remote.request.LoginRequest
 import com.example.summitapp.data.remote.request.RegisterRequest
-import com.example.summitapp.data.remote.response.CategoriesResponse
+import com.example.summitapp.data.remote.response.CategoryResponse
 import com.example.summitapp.data.remote.response.LoginResponse
+import com.example.summitapp.data.remote.response.ProductResponse
 import com.example.summitapp.data.remote.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -26,7 +27,12 @@ interface ApiService {
 
     @GET("Category")
     fun getCategories(
-    ): Call<CategoriesResponse>
+    ): Call<CategoryResponse>
+
+    @GET("Products")
+    fun getProducts(
+    ): Call<ProductResponse>
+
 
     companion object {
         fun getInstance(): ApiService {

@@ -1,5 +1,5 @@
-package com.example.summitapp.ui
-import com.example.summitapp.showMessage
+package com.example.summitapp.ui.activity
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,9 +12,11 @@ import com.example.summitapp.data.remote.ApiService
 import com.example.summitapp.data.remote.request.RegisterRequest
 import com.example.summitapp.data.remote.response.RegisterResponse
 import com.example.summitapp.databinding.ActivityRegisterBinding
+import com.example.summitapp.showMessage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding

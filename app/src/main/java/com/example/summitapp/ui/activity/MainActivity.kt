@@ -1,4 +1,4 @@
-package com.example.summitapp.ui
+package com.example.summitapp.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,8 +11,8 @@ import com.example.summitapp.Constants
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.summitapp.R
 import com.example.summitapp.databinding.ActivityMainBinding
-import com.example.summitapp.fragments.CategoryListFragment
-import com.example.summitapp.fragments.ProfileFragment
+import com.example.summitapp.ui.fragment.CategoryListFragment
+import com.example.summitapp.ui.fragment.ProfileFragment
 
 
 class MainActivity : AppCompatActivity() {

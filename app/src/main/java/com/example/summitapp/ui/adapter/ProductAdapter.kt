@@ -1,4 +1,4 @@
-package com.example.summitapp.adapters
+package com.example.summitapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
