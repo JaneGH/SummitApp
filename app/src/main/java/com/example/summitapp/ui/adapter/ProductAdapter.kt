@@ -12,7 +12,8 @@ import com.example.summitapp.databinding.ItemProductBinding
 
 class ProductAdapter(
     private val productList: List<Product>,
-    private val onQuantityChange: (Product, Int, String) -> Unit
+    private val onQuantityChange: (Product, Int, String) -> Unit,
+    private val onItemClick: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private val quantityVisibilityMap = mutableMapOf<Int, Boolean>()
@@ -58,6 +59,10 @@ class ProductAdapter(
                         quantityVisibilityMap[adapterPosition] = false
                     }
                 }
+            }
+
+            binding.root.setOnClickListener {
+                onItemClick(product)
             }
         }
     }

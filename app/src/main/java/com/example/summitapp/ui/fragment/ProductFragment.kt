@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.summitapp.R
 import com.example.summitapp.data.local.dao.ProductDao
 import com.example.summitapp.ui.adapter.ProductAdapter
 import com.example.summitapp.data.local.database.AppDatabase
@@ -45,16 +46,30 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productAdapter = ProductAdapter(products) { product, quantity, sign ->
-            if (sign == "minus" && quantity == 0) {
-                Cart.removeProduct(product)
-            } else {
-                Cart.setProductQuantity(product, quantity)
-            }
+        productAdapter = ProductAdapter(
+            products,
+            { product, quantity, sign ->
+                if (sign == "minus" && quantity == 0) {
+                    Cart.removeProduct(product)
+                } else {
+                    Cart.setProductQuantity(product, quantity)
+                }
 
-            val index = products.indexOf(product)
-            if (index != -1) productAdapter.notifyItemChanged(index)
-        }
+                val index = products.indexOf(product)
+                if (index != -1) productAdapter.notifyItemChanged(index)
+            },
+            { product ->
+                 val fragment = ProductDetailsFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt("product_id", product.productId)
+                    }
+                }
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        )
 
         binding.rvProducts.adapter = productAdapter
         binding.rvProducts.layoutManager = LinearLayoutManager(requireContext())

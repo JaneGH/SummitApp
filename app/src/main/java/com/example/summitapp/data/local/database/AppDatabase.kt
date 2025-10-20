@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.summitapp.data.local.Converters
 import com.example.summitapp.data.local.dao.CategoryDao
 import com.example.summitapp.data.local.dao.ProductDao
 import com.example.summitapp.data.model.Product
@@ -11,6 +13,7 @@ import com.example.summitapp.data.model.Category
 import com.example.summitapp.data.model.User
 
 
+@TypeConverters(Converters::class)
 @Database(entities = [User::class, Category::class, Product::class], version = 1, exportSchema = false)
     abstract class AppDatabase : RoomDatabase() {
 
