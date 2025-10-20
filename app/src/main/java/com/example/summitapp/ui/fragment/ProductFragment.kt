@@ -27,6 +27,15 @@ class ProductFragment : Fragment() {
 
     private val products = mutableListOf<Product>()
 
+    private var categoryId: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            categoryId = it.getInt("category_id", 0)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,9 +79,13 @@ class ProductFragment : Fragment() {
         Thread {
             if (!isAdded) return@Thread
             val productsFromRepo = productRepository.getProducts("")
+            val filteredProducts = categoryId?.let { id ->
+                productsFromRepo.filter { it.categoryId == id }
+            } ?: productsFromRepo
+
             requireActivity().runOnUiThread {
                 products.clear()
-                products.addAll(productsFromRepo)
+                products.addAll(filteredProducts)
                 productAdapter.notifyDataSetChanged()
             }
         }.start()

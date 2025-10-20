@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.summitapp.R
 import com.example.summitapp.databinding.ItemProductBinding
 import com.example.summitapp.data.model.Product
 
@@ -19,9 +20,14 @@ class ProductAdapter(
             binding.tvTitle.text = product.productName
             binding.tvDescription.text = product.description
             binding.tvPrice.text = product.price.toString()
+
+            val pathImage = "http://10.0.2.2/myshop/images/"
+            val imageUrl = pathImage+product.imageUrl
             Glide.with(binding.root.context)
-                .load(product.imageUrl)
+                .load(if (!imageUrl.isNullOrEmpty()) imageUrl else R.drawable.dummy_category)
+                .error(R.drawable.dummy_category)
                 .into(binding.imageProduct)
+
         }
     }
     override fun onCreateViewHolder(
