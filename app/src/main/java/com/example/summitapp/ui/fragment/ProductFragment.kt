@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.summitapp.data.local.dao.ProductDao
 import com.example.summitapp.ui.adapter.ProductAdapter
 import com.example.summitapp.data.local.database.AppDatabase
+import com.example.summitapp.data.model.Cart
 import com.example.summitapp.databinding.FragmentProductBinding
 import com.example.summitapp.data.model.Product
 import com.example.summitapp.data.remote.ApiService
@@ -17,16 +18,12 @@ import com.example.summitapp.data.repository.ProductRepository
 
 class ProductFragment : Fragment() {
 
-
-    private lateinit var binding : FragmentProductBinding
-    private lateinit var productDao : ProductDao
-
+    private lateinit var binding: FragmentProductBinding
+    private lateinit var productDao: ProductDao
     private lateinit var productRepository: ProductRepository
-
     private lateinit var productAdapter: ProductAdapter
 
     private val products = mutableListOf<Product>()
-
     private var categoryId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,24 +36,24 @@ class ProductFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProductBinding.inflate(inflater, container, false)
         initDB()
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         productAdapter = ProductAdapter(products) { product, quantity, sign ->
-            if (sign == "minus") {
-                productDao.deleteProduct(product.productId)
-                println("!!! ${productDao.getAllProducts().size}")
+            if (sign == "minus" && quantity == 0) {
+                Cart.removeProduct(product)
             } else {
-                productDao.insertProduct(product)
-                println("!!! ${productDao.getAllProducts().size}")
+                Cart.setProductQuantity(product, quantity)
             }
+
+            val index = products.indexOf(product)
+            if (index != -1) productAdapter.notifyItemChanged(index)
         }
 
         binding.rvProducts.adapter = productAdapter
@@ -64,24 +61,25 @@ class ProductFragment : Fragment() {
 
         val itemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.rvProducts.addItemDecoration(itemDecoration)
-        loadProducts()
 
+        loadProducts()
     }
 
     private fun initDB() {
         val db = AppDatabase.getInstance(requireContext())
         productDao = db.ProductDao()
         productRepository = ProductRepository(ApiService.getInstance(), productDao)
-
     }
 
     private fun loadProducts() {
         Thread {
             if (!isAdded) return@Thread
             val productsFromRepo = productRepository.getProducts("")
-            val filteredProducts = categoryId?.let { id ->
-                productsFromRepo.filter { it.categoryId == id }
-            } ?: productsFromRepo
+            val filteredProducts = if (categoryId != 0) {
+                productsFromRepo.filter { it.categoryId == categoryId }
+            } else {
+                productsFromRepo
+            }
 
             requireActivity().runOnUiThread {
                 products.clear()
@@ -90,5 +88,4 @@ class ProductFragment : Fragment() {
             }
         }.start()
     }
-
 }

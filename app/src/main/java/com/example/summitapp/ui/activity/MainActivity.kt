@@ -13,7 +13,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.summitapp.R
 import com.example.summitapp.databinding.ActivityMainBinding
 import com.example.summitapp.databinding.NavHeaderBinding
+import com.example.summitapp.ui.fragment.CartFragment
 import com.example.summitapp.ui.fragment.CategoryListFragment
+import com.example.summitapp.ui.fragment.OrdersFragment
 import com.example.summitapp.ui.fragment.ProfileFragment
 
 
@@ -88,6 +90,8 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> openFragment(CategoryListFragment())
                 R.id.nav_profile -> openFragment(ProfileFragment())
+                R.id.nav_cart -> openFragment(CartFragment())
+                R.id.nav_orders -> openFragment(OrdersFragment())
             }
             menuItem.isChecked = false
 
