@@ -21,4 +21,5 @@
     <string name="password">Password</string>
     <string name="re_enter_password">Re-enter Password</string>
     <string name="i_have_an_account">I have an account</string>
+    <string name="specifications">Specifications</string>
 </resources>

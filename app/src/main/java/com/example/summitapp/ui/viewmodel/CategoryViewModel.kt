@@ -11,7 +11,7 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
 
     fun fetchCategories() {
         val result = repository.getCategories()
-            _categories.postValue(result)
+        _categories.postValue(result)
 
     }
 }
