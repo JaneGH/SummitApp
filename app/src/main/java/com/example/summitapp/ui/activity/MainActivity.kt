@@ -17,6 +17,7 @@ import com.example.summitapp.ui.fragment.CartFragment
 import com.example.summitapp.ui.fragment.CategoryListFragment
 import com.example.summitapp.ui.fragment.OrdersFragment
 import com.example.summitapp.ui.fragment.ProfileFragment
+import androidx.core.content.edit
 
 
 class MainActivity : AppCompatActivity() {
@@ -92,12 +93,24 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_profile -> openFragment(ProfileFragment())
                 R.id.nav_cart -> openFragment(CartFragment())
                 R.id.nav_orders -> openFragment(OrdersFragment())
+                R.id.nav_logout -> {
+                    logout()
+                }
             }
             menuItem.isChecked = false
 
             binding.drawerLayout.closeDrawers()
             true
         }
+    }
+
+    private fun logout() {
+        val pref = getSharedPreferences(Constants.SETTING, MODE_PRIVATE)
+        pref.edit { clear() }
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun openFragment(fragment: Fragment) {
