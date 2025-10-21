@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="12dp"
-    android:background="?attr/selectableItemBackground">
+    android:padding="16dp"
+    android:background="@color/white">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageCategory"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/category_image"
-        app:shapeAppearanceOverlay="@style/CircleImageView"
-        android:src="@drawable/dummy_category" />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/category"
-        android:textSize="18sp"
-        android:textColor="@color/md_orange_500"
-        android:gravity="center" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageCategory"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/category_image"
+                app:shapeAppearanceOverlay="@style/CircleImageView"
+                android:src="@drawable/dummy_category" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/category"
+                android:textSize="18sp"
+                android:textColor="@color/md_orange_500"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 </LinearLayout>

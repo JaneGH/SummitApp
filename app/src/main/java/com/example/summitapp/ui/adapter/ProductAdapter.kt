@@ -21,6 +21,7 @@ class ProductAdapter(
     inner class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product, quantityInCart: Int, isVisible: Boolean) {
             binding.tvTitle.text = product.productName
+            binding.ratingBar.rating = (product.averageRating ?: 0.0).toFloat()
             binding.tvDescription.text = product.description
             binding.tvPrice.text = product.price.toString()
             binding.etQuantity.setText(quantityInCart.toString())

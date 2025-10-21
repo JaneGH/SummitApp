@@ -19,6 +19,7 @@ class CartAdapter(
             binding.tvTitle.text = product.productName
             binding.tvDescription.text = product.description
             binding.tvPrice.text = product.price.toString()
+            binding.ratingBar.rating = (product.averageRating ?: 0.0).toFloat()
             binding.etQuantity.setText(quantity.toString())
 
             val pathImage = "http://10.0.2.2/myshop/images/"

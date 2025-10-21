@@ -2,7 +2,10 @@ package com.example.summitapp.ui.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -25,30 +28,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         val splashScreen = installSplashScreen()
+        super.onCreate(savedInstanceState)
 
         splashScreen.setOnExitAnimationListener { splashScreenView ->
-            val iconView = try {
-                splashScreenView.iconView
-            } catch (e: NullPointerException) {
-                null
-            }
+            val iconView: ImageView? = splashScreenView.iconView as ImageView?
 
-            if (iconView != null) {
-                iconView.animate()
-                    .alpha(0f)
-                    .setDuration(500)
-                    .withEndAction {
-                        splashScreenView.remove()
-                        proceedWithNextSteps()
-                    }
-            } else {
-                splashScreenView.remove()
-                proceedWithNextSteps()
+            iconView?.apply {
+                scaleType = ImageView.ScaleType.FIT_CENTER
+                scaleX = 0.5f
+                scaleY = 0.5f
             }
+            splashScreenView.remove()
         }
 
+        proceedWithNextSteps()
     }
 
     private fun proceedWithNextSteps() {

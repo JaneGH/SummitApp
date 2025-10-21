@@ -3,11 +3,9 @@
     <style name="Base.Theme.SummitApp" parent="Theme.Material3.DayNight.NoActionBar">
     </style>
 
-<!--    <style name="Theme.SummitApp" parent="Base.Theme.SummitApp" />-->
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
-<!--        <item name="windowSplashScreenBackground">@color/splash_screen_blue_background</item>-->
-<!--        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen_logo</item>-->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_summit</item>
         <item name="windowSplashScreenAnimationDuration">200</item>
         <item name="postSplashScreenTheme">@style/Base.Theme.SummitApp</item>
     </style>
