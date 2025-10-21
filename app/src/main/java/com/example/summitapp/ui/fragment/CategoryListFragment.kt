@@ -26,7 +26,7 @@ class CategoryListFragment : Fragment() {
 
     private val viewModel: CategoryViewModel by lazy {
         val database = AppDatabase.getInstance(requireContext())
-        val repository = CategoryRepository(ApiService.getInstance(), database.CategoryDao())
+        val repository = CategoryRepository(ApiService.getInstance(), database.categoryDao())
         val factory = CategoryViewModelFactory(repository)
         ViewModelProvider(this, factory)[CategoryViewModel::class.java]
     }

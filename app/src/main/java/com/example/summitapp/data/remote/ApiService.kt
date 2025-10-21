@@ -6,6 +6,7 @@ import com.example.summitapp.data.remote.response.LoginResponse
 import com.example.summitapp.data.remote.response.ProductDetailsResponse
 import com.example.summitapp.data.remote.response.ProductResponse
 import com.example.summitapp.data.remote.response.RegisterResponse
+import com.example.summitapp.data.remote.response.SubcategoryResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -41,6 +42,9 @@ interface ApiService {
     fun getProductDetails(
         @Path("productId") productId: Int
     ): Call<ProductDetailsResponse>
+
+    @GET("subcategory")
+    fun getSubcategories(@Query("category_id") categoryId: String): Call<SubcategoryResponse>
 
 
 

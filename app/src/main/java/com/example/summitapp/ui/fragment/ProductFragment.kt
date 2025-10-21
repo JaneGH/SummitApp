@@ -14,10 +14,17 @@ import com.example.summitapp.data.local.database.AppDatabase
 import com.example.summitapp.data.model.Cart
 import com.example.summitapp.databinding.FragmentProductBinding
 import com.example.summitapp.data.model.Product
+import com.example.summitapp.data.model.Subcategory
 import com.example.summitapp.data.remote.ApiService
 import com.example.summitapp.data.repository.ProductRepository
+import com.example.summitapp.data.repository.SubcategoryRepository
+import com.google.android.material.tabs.TabLayout
 
 class ProductFragment : Fragment() {
+
+    private var subcategories = listOf<Subcategory>()
+    private var selectedSubcategoryId: String? = null
+    private lateinit var subcategoryRepository: SubcategoryRepository
 
     private lateinit var binding: FragmentProductBinding
     private lateinit var productDao: ProductDao
@@ -45,6 +52,8 @@ class ProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        subcategoryRepository = SubcategoryRepository(ApiService.getInstance(), AppDatabase.getInstance(requireContext()).subcategoryDao())
 
         productAdapter = ProductAdapter(
             products,
@@ -77,23 +86,24 @@ class ProductFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.rvProducts.addItemDecoration(itemDecoration)
 
+        loadSubcategories()
         loadProducts()
     }
 
     private fun initDB() {
         val db = AppDatabase.getInstance(requireContext())
-        productDao = db.ProductDao()
+        productDao = db.productDao()
         productRepository = ProductRepository(ApiService.getInstance(), productDao)
     }
 
     private fun loadProducts() {
         Thread {
             if (!isAdded) return@Thread
+
             val productsFromRepo = productRepository.getProducts("")
-            val filteredProducts = if (categoryId != 0) {
-                productsFromRepo.filter { it.categoryId == categoryId }
-            } else {
-                productsFromRepo
+            val filteredProducts = productsFromRepo.filter {
+                (categoryId == 0 || it.categoryId == categoryId) &&
+                        (selectedSubcategoryId == null || it.subcategoryId.toString() == selectedSubcategoryId)
             }
 
             requireActivity().runOnUiThread {
@@ -103,4 +113,39 @@ class ProductFragment : Fragment() {
             }
         }.start()
     }
+
+    private fun loadSubcategories() {
+        Thread {
+            val loadedSubcategories = subcategoryRepository.getSubcategories(categoryId.toString())
+            if (!isAdded) return@Thread
+
+            requireActivity().runOnUiThread {
+                subcategories = loadedSubcategories
+                setupTabs()
+            }
+        }.start()
+    }
+
+    private fun setupTabs() {
+        val tabLayout = binding.tabLayoutSubcategories
+        tabLayout.removeAllTabs()
+
+
+        subcategories.forEach { subcategory ->
+            tabLayout.addTab(tabLayout.newTab().setText(subcategory.subcategoryName).setTag(subcategory.subcategoryId))
+        }
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                selectedSubcategoryId = tab.tag as? String
+                loadProducts()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        tabLayout.getTabAt(0)?.select()
+    }
+
 }

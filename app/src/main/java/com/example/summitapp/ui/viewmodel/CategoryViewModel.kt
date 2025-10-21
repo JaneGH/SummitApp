@@ -3,16 +3,20 @@ package com.example.summitapp.ui.viewmodel
 import androidx.lifecycle.*
 import com.example.summitapp.data.model.Category
 import com.example.summitapp.data.repository.CategoryRepository
+import java.util.concurrent.Executors
 
 class CategoryViewModel(private val repository: CategoryRepository) : ViewModel() {
+
+    private val executor = Executors.newSingleThreadExecutor()
 
     private val _categories = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>> = _categories
 
     fun fetchCategories() {
-        val result = repository.getCategories()
-        _categories.postValue(result)
-
+        executor.execute {
+            val result = repository.getCategories()
+            _categories.postValue(result)
+        }
     }
 }
 
