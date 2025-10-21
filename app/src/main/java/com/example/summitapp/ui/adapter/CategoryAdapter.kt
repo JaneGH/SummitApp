@@ -9,7 +9,7 @@ import com.example.summitapp.data.model.Category
 import com.example.summitapp.databinding.ItemCategoryBinding
 
 class CategoryAdapter(
-    val categoryList : List<Category>,
+    var categoryList : List<Category>,
     private val onItemClick: (Category) ->Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(){
     override fun onCreateViewHolder(
@@ -45,5 +45,9 @@ class CategoryAdapter(
             }
         }
 
+    }
+    fun updateList(newList: List<Category>) {
+        categoryList = newList
+        notifyDataSetChanged()
     }
 }
