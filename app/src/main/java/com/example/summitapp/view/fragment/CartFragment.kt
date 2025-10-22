@@ -1,6 +1,5 @@
 package com.example.summitapp.view.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,14 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.summitapp.model.data.Cart
 import com.example.summitapp.databinding.FragmentCartBinding
 import com.example.summitapp.view.adapter.CartAdapter
+import com.example.summitapp.viewmodel.CartViewModel
+import androidx.fragment.app.viewModels
+import com.example.summitapp.R
 
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
     private lateinit var cartAdapter: CartAdapter
+    private val cartViewModel: CartViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,30 +30,26 @@ class CartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        cartAdapter = CartAdapter(Cart.getCartItems().toMutableList()) { product, newQuantity, sign ->
-            if (sign == "minus") {
-                 if (newQuantity == 0) {
-                    Cart.removeProduct(product)
-                } else {
-                    Cart.setProductQuantity(product, newQuantity)
-                }
-            } else {
-                Cart.setProductQuantity(product, newQuantity)
-            }
-            updateCart()
+        cartAdapter = CartAdapter(mutableListOf()) { product, newQuantity, sign ->
+            cartViewModel.updateProductQuantity(product, newQuantity, sign)
         }
 
-        binding.rvCart.adapter = cartAdapter
-        binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvCart.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        binding.rvCart.apply {
+            adapter = cartAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        }
 
-        updateCart()
+        observeViewModel()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun updateCart() {
-        val items = Cart.getCartItems()
-        cartAdapter.updateItems(items)
-        binding.tvTotal.text = "Total: ${Cart.getTotalPrice()}"
+    private fun observeViewModel() {
+        cartViewModel.cartItems.observe(viewLifecycleOwner) { items ->
+            cartAdapter.updateItems(items)
+        }
+
+        cartViewModel.totalPrice.observe(viewLifecycleOwner) { total ->
+            binding.tvTotal.text = getString(R.string.total, total)
+        }
     }
 }
