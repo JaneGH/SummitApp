@@ -11,7 +11,7 @@ import com.example.summitapp.model.data.Cart
 import com.example.summitapp.databinding.ItemProductBinding
 
 class ProductAdapter(
-    private val productList: List<Product>,
+    var productList:  MutableList<Product>,
     private val onQuantityChange: (Product, Int, String) -> Unit,
     private val onItemClick: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
@@ -82,4 +82,10 @@ class ProductAdapter(
     }
 
     override fun getItemCount(): Int = productList.size
+
+    fun updateList(newList: List<Product>) {
+        productList.clear()
+        productList.addAll(newList)
+        notifyDataSetChanged()
+    }
 }
