@@ -37,12 +37,14 @@ class ProductViewModel(
         this.categoryId = categoryId
         loadSubcategories()
 
-       productRepository.getProducts().observe(lifecycleOwner) { list ->
+        productRepository.getProducts().observe(lifecycleOwner) { list ->
             currentProducts = list
             filterProducts()
         }
 
         productRepository.updateProducts("")
+
+
     }
 
     fun selectSubcategory(subcategoryId: Int?) {
@@ -51,8 +53,7 @@ class ProductViewModel(
     }
 
     private fun filterProducts() {
-        if (currentProducts.isEmpty()) return
-        val filtered = currentProducts.filter { product ->
+         val filtered = currentProducts.filter { product ->
             val matchesCategory = product.categoryId == categoryId
             val matchesSubcategory = selectedSubcategoryId?.let { it == product.subcategoryId } ?: true
             matchesCategory && matchesSubcategory

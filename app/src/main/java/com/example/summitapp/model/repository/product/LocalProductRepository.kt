@@ -9,11 +9,7 @@ import com.example.summitapp.model.local.dao.ProductDao
 class LocalProductRepository(private val productDao: ProductDao) {
 
     fun getProducts(): LiveData<List<Product>> {
-        val liveData = MutableLiveData<List<Product>>()
-        Thread {
-            liveData.postValue(productDao.getAllProducts())
-        }.start()
-        return liveData
+        return productDao.getAllProducts()
     }
 
     fun saveProducts(products: List<Product>) {

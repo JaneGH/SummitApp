@@ -1,5 +1,6 @@
 package com.example.summitapp.model.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -20,7 +21,7 @@ interface ProductDao {
     fun clearAll()
 
     @Query("SELECT * FROM product")
-    fun getAllProducts(): List<Product>
+    fun getAllProducts(): LiveData<List<Product>>
 
     @Update
     fun updateProduct(product: Product)
