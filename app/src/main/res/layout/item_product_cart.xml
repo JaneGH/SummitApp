@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/imageProduct"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Title"
+        app:layout_constraintStart_toEndOf="@id/imageProduct"
+        app:layout_constraintTop_toTopOf="@id/imageProduct"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/tvUnitPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unit price"
+        android:textSize="18sp"
+        android:textColor="@color/light_gray"
+        app:layout_constraintStart_toEndOf="@id/imageProduct"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp" />
+
+    <TextView
+        android:id="@+id/tvUnitPriceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price value"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/tvUnitPrice"
+        app:layout_constraintBottom_toBottomOf="@id/tvUnitPrice"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="15dp" />
+
+    <TextView
+        android:id="@+id/tvQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity"
+        android:textSize="18sp"
+        android:textColor="@color/light_gray"
+        app:layout_constraintStart_toEndOf="@id/imageProduct"
+        app:layout_constraintTop_toBottomOf="@id/tvUnitPrice"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp" />
+
+    <TextView
+        android:id="@+id/tvQuantityValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity value"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvUnitPriceValue"
+        app:layout_constraintBottom_toBottomOf="@id/tvQuantity" />
+
+    <TextView
+        android:id="@+id/tvAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount"
+        android:textColor="@color/light_gray"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/imageProduct"
+        app:layout_constraintTop_toBottomOf="@id/tvQuantity"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp" />
+
+    <TextView
+        android:id="@+id/tvAmountValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount value"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvUnitPriceValue"
+        app:layout_constraintBottom_toBottomOf="@id/tvAmount"
+        android:layout_marginTop="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

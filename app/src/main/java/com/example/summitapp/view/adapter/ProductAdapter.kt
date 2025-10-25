@@ -37,10 +37,17 @@ class ProductAdapter(
             binding.quantityContainer.visibility = if (isVisible) View.VISIBLE else View.GONE
 
             binding.btnAddToCart.setOnClickListener {
-                quantityVisibilityMap[adapterPosition] = true
-                binding.btnAddToCart.visibility = View.GONE
-                binding.quantityContainer.visibility = View.VISIBLE
-                onQuantityChange(product, 1, "plus")
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    quantityVisibilityMap[position] = true
+
+                    binding.apply {
+                        btnAddToCart.visibility = View.GONE
+                        quantityContainer.visibility = View.VISIBLE
+                    }
+
+                    onQuantityChange(product, 1, "plus")
+                }
             }
 
             binding.btnPlus.setOnClickListener {
@@ -55,9 +62,14 @@ class ProductAdapter(
                     binding.etQuantity.setText(newQuantity.toString())
                     onQuantityChange(product, newQuantity, "minus")
                     if (newQuantity == 0) {
-                        binding.btnAddToCart.visibility = View.VISIBLE
-                        binding.quantityContainer.visibility = View.GONE
-                        quantityVisibilityMap[adapterPosition] = false
+                        val position = bindingAdapterPosition
+                        if (position != RecyclerView.NO_POSITION) {
+                            binding.apply {
+                                btnAddToCart.visibility = View.VISIBLE
+                                quantityContainer.visibility = View.GONE
+                            }
+                            quantityVisibilityMap[position] = false
+                        }
                     }
                 }
             }

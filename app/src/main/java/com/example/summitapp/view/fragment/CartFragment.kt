@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.summitapp.databinding.FragmentCartBinding
@@ -38,6 +39,13 @@ class CartFragment : Fragment() {
             adapter = cartAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        }
+
+        binding.btnCheckout.setOnClickListener{
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragmentContainer, CheckoutFragment())
+            fragmentTransaction.addToBackStack(CheckoutFragment.TAG)
+            fragmentTransaction.commit()
         }
 
         observeViewModel()
