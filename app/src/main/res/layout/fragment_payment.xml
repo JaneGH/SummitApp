@@ -26,103 +26,62 @@
         android:paddingRight="20dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radioButtonCOD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginHorizontal="4dp"
+            android:text="Cash on Delivery (COD)"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/radio_button_border">
+            android:background="@drawable/radio_button_border"
+            android:gravity="start|center_vertical"
+            app:buttonTint="@color/colorPrimary"
+            android:layoutDirection="rtl"
+            />
 
-            <TextView
-                android:layout_width="0dp"
-                android:paddingHorizontal="8dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cash on Delivery (COD)"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/radioButtonCOD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                app:buttonTint="@color/colorPrimary" />
-        </LinearLayout>
-
-
-        <LinearLayout
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radioButtonCreditCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginHorizontal="4dp"
+            android:text="Credit Card"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/radio_button_border">
+            android:background="@drawable/radio_button_border"
+            android:gravity="start|center_vertical"
+            app:buttonTint="@color/colorPrimary"
+            android:layoutDirection="rtl"
+            />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Credit Card"
-                android:paddingHorizontal="8dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/radioButtonCreditCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:buttonTint="@color/colorPrimary" />
-        </LinearLayout>
-
-        <LinearLayout
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radioButtonPayPal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginHorizontal="4dp"
+            android:text="PayPal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/radio_button_border">
+            android:background="@drawable/radio_button_border"
+            android:gravity="start|center_vertical"
+            app:buttonTint="@color/colorPrimary"
+            android:layoutDirection="rtl"
+            /> />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="PayPal"
-                android:paddingHorizontal="8dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/radioButtonPayPal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:buttonTint="@color/colorPrimary" />
-        </LinearLayout>
-
-        <LinearLayout
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radioButtonInternetBanking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginHorizontal="4dp"
+            android:text="Internet Banking"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/radio_button_border">
+            android:background="@drawable/radio_button_border"
+            android:gravity="start|center_vertical"
+            app:buttonTint="@color/colorPrimary"
+            android:layoutDirection="rtl"
+            />/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Internet Banking"
-                android:paddingHorizontal="8dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/radioButtonInternetBanking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:buttonTint="@color/colorPrimary" />
-        </LinearLayout>
     </RadioGroup>
 
     <View
