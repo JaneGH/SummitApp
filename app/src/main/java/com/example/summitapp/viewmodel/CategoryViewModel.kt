@@ -13,7 +13,6 @@ import com.example.summitapp.model.repository.category.CategoryRepository
 import com.example.summitapp.model.repository.category.ICategoryRepository
 import com.example.summitapp.model.repository.category.LocalCategoryRepository
 import com.example.summitapp.model.repository.category.RemoteCategoryRepository
-import java.util.concurrent.Executors
 
 class CategoryViewModel(application: Application, private val repository: ICategoryRepository) : ViewModel() {
 

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
@@ -30,7 +31,7 @@
             android:id="@+id/radioButtonCOD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cash on Delivery (COD)"
+            android:text="Cash on Delivery"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:layout_marginVertical="8dp"
@@ -66,7 +67,7 @@
             android:gravity="start|center_vertical"
             app:buttonTint="@color/colorPrimary"
             android:layoutDirection="rtl"
-            /> />
+            />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButtonInternetBanking"
@@ -80,7 +81,7 @@
             android:gravity="start|center_vertical"
             app:buttonTint="@color/colorPrimary"
             android:layoutDirection="rtl"
-            />/>
+            />
 
     </RadioGroup>
 

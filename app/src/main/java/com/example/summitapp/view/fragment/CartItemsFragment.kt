@@ -44,33 +44,19 @@ class CartItemsFragment : Fragment() {
         }
 
         binding.btnNext.setOnClickListener {
-            val checkoutFragment = parentFragmentManager.findFragmentByTag(CheckoutFragment.TAG)
-            if (checkoutFragment == null) {
-                val fragmentTransaction = parentFragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.fragmentContainer, CheckoutFragment(), CheckoutFragment.TAG)
-                fragmentTransaction.addToBackStack(CheckoutFragment.TAG)
-                fragmentTransaction.commit()
-
-                parentFragmentManager.executePendingTransactions()
-                val newCheckoutFragment = parentFragmentManager.findFragmentByTag(CheckoutFragment.TAG)
-                if (newCheckoutFragment != null) {
-                    val viewPager = (newCheckoutFragment as CheckoutFragment).binding.viewPager
-                    viewPager.post {
-                        viewPager.currentItem = 1
-                    }
-                }
-            } else {
-                val viewPager = (checkoutFragment as CheckoutFragment).binding.viewPager
-                viewPager.post {
-                     viewPager.currentItem = 1
-                }
-            }
+            openPaymentFragment()
         }
 
         observeViewModel()
     }
 
 
+    private fun openPaymentFragment() {
+        val checkoutFragment = parentFragmentManager.findFragmentByTag(CheckoutFragment.TAG)
+        if (checkoutFragment != null && checkoutFragment is CheckoutFragment) {
+            checkoutFragment.goToPage(1)
+        }
+    }
 
     @SuppressLint("StringFormatMatches", "SetTextI18n")
     private fun observeViewModel() {

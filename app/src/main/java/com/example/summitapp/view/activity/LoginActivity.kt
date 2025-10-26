@@ -53,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
                     val pref = getSharedPreferences(Constants.SETTING, MODE_PRIVATE)
                     pref.edit(commit = true) {
                         putBoolean(Constants.LOGGED_IN, true)
+                        putString(Constants.USER_ID, it.user?.userId ?: "")
                         putString(Constants.FULL_NAME, it.user?.fullName ?: "")
                         putString(Constants.EMAIL_ID, it.user?.emailId ?: "")
                         putString(Constants.MOBILE_NO, it.user?.mobileNo ?: "")

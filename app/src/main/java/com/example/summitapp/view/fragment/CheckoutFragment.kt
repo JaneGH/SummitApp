@@ -33,4 +33,10 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
             }
         }.attach()
     }
+
+    fun goToPage(index: Int) {
+        binding.viewPager.post {
+            binding.viewPager.currentItem = index
+        }
+    }
 }

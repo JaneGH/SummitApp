@@ -10,20 +10,22 @@ import com.example.summitapp.Constants
 import com.example.summitapp.databinding.ActivityRegisterBinding
 import com.example.summitapp.showMessage
 import com.example.summitapp.viewmodel.RegisterViewModel
+import com.example.summitapp.viewmodel.LoginViewModel
+import com.example.summitapp.model.data.User
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels { RegisterViewModel.Factory }
+    private val registerViewModel: RegisterViewModel by viewModels { RegisterViewModel.Factory }
+    private val loginViewModel: LoginViewModel by viewModels { LoginViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnSignUp.setOnClickListener {
-            viewModel.register(
+            registerViewModel.register(
                 fullName = binding.etFullName.text.toString().trim(),
                 mobile = binding.etMobile.text.toString().trim(),
                 email = binding.etEmail.text.toString().trim(),
@@ -37,34 +39,69 @@ class RegisterActivity : AppCompatActivity() {
             finish()
         }
 
-        observeViewModel()
+        observeRegisterViewModel()
+        observeLoginViewModel()
     }
 
-    private fun observeViewModel() {
-        viewModel.loading.observe(this) { isLoading ->
+    private fun observeRegisterViewModel() {
+        registerViewModel.loading.observe(this) { isLoading ->
             binding.progressBar.isVisible = isLoading
             binding.btnSignUp.isEnabled = !isLoading
         }
 
-        viewModel.error.observe(this) { errorMsg ->
+        registerViewModel.error.observe(this) { errorMsg ->
             errorMsg?.let { showMessage("Error", it) }
         }
 
-        viewModel.registerResult.observe(this) { result ->
+        registerViewModel.registerResult.observe(this) { result ->
             result?.let {
-                val pref = getSharedPreferences(Constants.SETTING, MODE_PRIVATE)
-                pref.edit(commit = true) {
-                    putBoolean(Constants.LOGGED_IN, true)
-                    putString(Constants.FULL_NAME, binding.etFullName.text.toString())
-                    putString(Constants.EMAIL_ID, binding.etEmail.text.toString())
-                    putString(Constants.MOBILE_NO, binding.etMobile.text.toString())
+                if (it.status == 0) {
+                    val email = binding.etEmail.text.toString().trim()
+                    val password = binding.etPassword.text.toString().trim()
+                    loginViewModel.login(email, password)
+                } else {
+                    showMessage("Registration Failed", it.message)
                 }
-
-                val intent = Intent(this, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
             }
         }
+    }
+
+    private fun observeLoginViewModel() {
+        loginViewModel.loading.observe(this) { isLoading ->
+            binding.progressBar.isVisible = isLoading
+        }
+
+        loginViewModel.error.observe(this) { errorMsg ->
+            errorMsg?.let { showMessage("Error", it) }
+        }
+
+        loginViewModel.loginResult.observe(this) { result ->
+            result?.let {
+                if (it.status == 0 && it.user != null) {
+                    saveUserToPreferences(it.user)
+                    goToMainScreen()
+                } else {
+                    showMessage("Login Failed", it.message)
+                }
+            }
+        }
+    }
+
+    private fun saveUserToPreferences(user: User) {
+        val pref = getSharedPreferences(Constants.SETTING, MODE_PRIVATE)
+        pref.edit(commit = true) {
+            putBoolean(Constants.LOGGED_IN, true)
+            putString(Constants.FULL_NAME, user.fullName)
+            putString(Constants.EMAIL_ID, user.emailId)
+            putString(Constants.MOBILE_NO, user.mobileNo)
+            putString(Constants.USER_ID, user.userId)
+        }
+    }
+
+    private fun goToMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

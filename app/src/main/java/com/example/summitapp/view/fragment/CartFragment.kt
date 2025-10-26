@@ -42,14 +42,30 @@ class CartFragment : Fragment() {
         }
 
         binding.btnCheckout.setOnClickListener{
-            val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragmentContainer, CheckoutFragment())
-            fragmentTransaction.addToBackStack(CheckoutFragment.TAG)
-            fragmentTransaction.commit()
+            openCheckoutPage(0)
         }
 
         observeViewModel()
     }
+
+    private fun openCheckoutPage(pageIndex: Int) {
+        val fragmentTag = CheckoutFragment.TAG
+        var checkoutFragment = parentFragmentManager.findFragmentByTag(fragmentTag) as? CheckoutFragment
+
+        if (checkoutFragment == null) {
+            checkoutFragment = CheckoutFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, checkoutFragment, fragmentTag)
+                .addToBackStack(fragmentTag)
+                .commit()
+            parentFragmentManager.executePendingTransactions()
+        }
+
+        checkoutFragment.view?.post {
+            checkoutFragment.goToPage(pageIndex)
+        }
+    }
+
 
     private fun observeViewModel() {
         cartViewModel.cartItems.observe(viewLifecycleOwner) { items ->

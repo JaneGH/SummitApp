@@ -6,11 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.Toast
 import com.example.summitapp.R
 import com.example.summitapp.databinding.FragmentPaymentBinding
 import com.example.summitapp.model.data.PaymentMethod
 
 class PaymentFragment : Fragment(R.layout.fragment_payment) {
+
+    companion object {
+        val TAG = PaymentFragment::class.java.simpleName
+    }
     private lateinit var binding: FragmentPaymentBinding
 
     override fun onCreateView(
@@ -26,10 +31,14 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
         binding.btnNext.setOnClickListener {
             val selectedPaymentMethod = getSelectedPaymentMethod()
-            selectedPaymentMethod?.let {
+            if (selectedPaymentMethod == null) {
+                Toast.makeText(requireContext(), "Please select a payment method", Toast.LENGTH_SHORT).show()
+            } else {
+                openPaymentFragment()
             }
         }
     }
+
 
     private fun getSelectedPaymentMethod(): PaymentMethod? {
         val selectedRadioButtonId = binding.radioGroupPaymentMethods.checkedRadioButtonId
@@ -41,6 +50,13 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
             PaymentMethod.PayPal.displayName -> PaymentMethod.PayPal
             PaymentMethod.InternetBanking.displayName -> PaymentMethod.InternetBanking
             else -> null
+        }
+    }
+
+    private fun openPaymentFragment() {
+        val checkoutFragment = parentFragmentManager.findFragmentByTag(CheckoutFragment.TAG)
+        if (checkoutFragment != null && checkoutFragment is CheckoutFragment) {
+            checkoutFragment.goToPage(3)
         }
     }
 }
