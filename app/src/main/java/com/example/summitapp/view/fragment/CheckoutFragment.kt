@@ -2,6 +2,7 @@ package com.example.summitapp.view.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.summitapp.R
 import com.example.summitapp.databinding.FragmentCheckoutBinding
@@ -18,6 +19,7 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCheckoutBinding.bind(view)
+        (activity as? AppCompatActivity)?.supportActionBar?.title = "CHECKOUT"
 
         val checkoutTabsAdapter = CheckoutTabsAdapter(requireActivity())
         val viewPager = binding.viewPager
@@ -32,6 +34,7 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
                 3 -> tab.text = "Summary"
             }
         }.attach()
+
     }
 
     fun goToPage(index: Int) {
