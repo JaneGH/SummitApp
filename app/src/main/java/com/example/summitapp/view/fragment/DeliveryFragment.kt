@@ -12,10 +12,12 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.summitapp.Constants
 import com.example.summitapp.databinding.FragmentDeliveryBinding
 import com.example.summitapp.model.data.Address
+import com.example.summitapp.viewmodel.CheckoutViewModel
 import com.example.summitapp.viewmodel.DeliveryViewModel
 
 class DeliveryFragment : Fragment() {
@@ -23,6 +25,8 @@ class DeliveryFragment : Fragment() {
     companion object {
         val TAG = DeliveryFragment::class.java.simpleName
     }
+    private val checkoutViewModel: CheckoutViewModel by activityViewModels { CheckoutViewModel.Factory }
+
     private lateinit var binding: FragmentDeliveryBinding
     private val viewModel: DeliveryViewModel by viewModels { DeliveryViewModel.Factory }
 
@@ -54,6 +58,7 @@ class DeliveryFragment : Fragment() {
             if (selectedAddress == null) {
                 Toast.makeText(requireContext(), "Please select an address", Toast.LENGTH_SHORT).show()
             } else {
+                checkoutViewModel.setAddress(selectedAddress!!)
                 openPaymentFragment()
             }
         }

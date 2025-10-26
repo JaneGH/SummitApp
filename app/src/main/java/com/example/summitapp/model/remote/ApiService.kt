@@ -1,11 +1,13 @@
 package com.example.summitapp.model.remote
 import com.example.summitapp.model.remote.request.AddressRequest
 import com.example.summitapp.model.remote.request.LoginRequest
+import com.example.summitapp.model.remote.request.PlaceOrderRequest
 import com.example.summitapp.model.remote.request.RegisterRequest
 import com.example.summitapp.model.remote.response.AddressResponse
 import com.example.summitapp.model.remote.response.BasicResponse
 import com.example.summitapp.model.remote.response.CategoryResponse
 import com.example.summitapp.model.remote.response.LoginResponse
+import com.example.summitapp.model.remote.response.PlaceOrderResponse
 import com.example.summitapp.model.remote.response.ProductDetailsResponse
 import com.example.summitapp.model.remote.response.ProductResponse
 import com.example.summitapp.model.remote.response.RegisterResponse
@@ -61,6 +63,12 @@ interface ApiService {
     suspend fun getUserAddresses(
         @Path("user_id") userId: Int
     ): Response<AddressResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST("Order")
+    suspend fun placeOrder(
+        @Body request: PlaceOrderRequest
+    ): Response<PlaceOrderResponse>
 
     companion object {
         fun getInstance(): ApiService {

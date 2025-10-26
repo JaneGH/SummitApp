@@ -7,15 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import com.example.summitapp.R
 import com.example.summitapp.databinding.FragmentPaymentBinding
 import com.example.summitapp.model.data.PaymentMethod
+import com.example.summitapp.viewmodel.CheckoutViewModel
 
 class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
     companion object {
         val TAG = PaymentFragment::class.java.simpleName
     }
+
+    private val checkoutViewModel: CheckoutViewModel by activityViewModels { CheckoutViewModel.Factory }
     private lateinit var binding: FragmentPaymentBinding
 
     override fun onCreateView(
@@ -34,7 +38,8 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
             if (selectedPaymentMethod == null) {
                 Toast.makeText(requireContext(), "Please select a payment method", Toast.LENGTH_SHORT).show()
             } else {
-                openPaymentFragment()
+                checkoutViewModel.setPayment(selectedPaymentMethod)
+                openSummaryFragment()
             }
         }
     }
@@ -53,7 +58,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         }
     }
 
-    private fun openPaymentFragment() {
+    private fun openSummaryFragment() {
         val checkoutFragment = parentFragmentManager.findFragmentByTag(CheckoutFragment.TAG)
         if (checkoutFragment != null && checkoutFragment is CheckoutFragment) {
             checkoutFragment.goToPage(3)
