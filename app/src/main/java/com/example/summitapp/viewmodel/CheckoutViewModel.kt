@@ -15,6 +15,7 @@ import com.example.summitapp.model.data.PaymentMethod
 import com.example.summitapp.model.remote.ApiService
 import com.example.summitapp.model.repository.CheckoutRepository
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import com.example.summitapp.model.data.Product
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -33,6 +34,8 @@ class CheckoutViewModel(
     private val _orderStatus = MutableLiveData<Result<String>>()
     val orderStatus: LiveData<Result<String>> get() = _orderStatus
 
+    private val _cartItems = MutableLiveData<List<Pair<Product, Int>>>()
+    val cartItems: LiveData<List<Pair<Product, Int>>> get() = _cartItems
 
     fun setAddress(address: Address) {
         _selectedAddress.value = address
