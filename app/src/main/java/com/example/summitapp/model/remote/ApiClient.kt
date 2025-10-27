@@ -1,4 +1,5 @@
 package com.example.summitapp.model.remote
+import com.example.summitapp.Constants.BASE_URL
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,7 +30,7 @@ object ApiClient {
 
         Retrofit.Builder()
 //            .baseUrl("http://10.0.0.104/myshop/index.php/")
-            .baseUrl("http://10.0.2.2/myshop/index.php/")
+            .baseUrl("${BASE_URL}/index.php/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()

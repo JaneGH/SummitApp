@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.summitapp.Constants.BASE_URL
 import com.example.summitapp.R
 import com.example.summitapp.databinding.ItemProductBinding
 import com.example.summitapp.model.data.CartItem
@@ -23,7 +24,7 @@ class CartItemsAdapter(
             binding.tvQuantityValue.text = quantity.toString()
             binding.tvAmountValue.text = (product.price * quantity).toString()
 
-            val pathImage = "http://10.0.2.2/myshop/images/"
+            val pathImage = "${BASE_URL}/images/"
             val imageUrl = pathImage + product.imageUrl
             Glide.with(binding.root.context)
                 .load(if (imageUrl.isNotEmpty()) imageUrl else R.drawable.dummy_category)

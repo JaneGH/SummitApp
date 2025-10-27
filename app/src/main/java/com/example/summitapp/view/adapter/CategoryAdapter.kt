@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.summitapp.Constants.BASE_URL
 import com.example.summitapp.R
 import com.example.summitapp.model.data.Category
 import com.example.summitapp.databinding.ItemCategoryBinding
@@ -34,7 +35,7 @@ class CategoryAdapter(
     inner class CategoryViewHolder(private val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
             binding.tvTitle.text = category.categoryName
-            val pathImage = "http://10.0.2.2/myshop/images/"
+            val pathImage = "${BASE_URL}/images/"
             val imageUrl = pathImage+category.categoryImageUrl
             Glide.with(binding.root.context)
                 .load(if (!imageUrl.isNullOrEmpty()) imageUrl else R.drawable.dummy_category)

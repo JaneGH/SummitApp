@@ -10,6 +10,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.summitapp.Constants.BASE_URL
 import com.example.summitapp.R
 import com.example.summitapp.model.data.Cart
 import com.example.summitapp.model.remote.ApiService
@@ -48,12 +49,14 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun setImagesForProduct(product: Product) {
-        val imageUrls = listOf(
-            "http://10.0.2.2/myshop/images/${product.imageUrl}",
-            "http://10.0.2.2/myshop/images/${product.imageUrl}",
-            "http://10.0.2.2/myshop/images/${product.imageUrl}"
-        )
+        var imageUrls = product.images
+            ?.sortedBy { it.displayOrder }
+            ?.map { imageObj -> "${BASE_URL}/images/${imageObj.image}" }
+            ?: emptyList()
 
+        if (imageUrls.isEmpty() && !product.imageUrl.isNullOrEmpty()){
+            imageUrls = listOf("${BASE_URL}/images/${product.imageUrl}")
+        }
         binding.viewPagerImages.adapter = ImageSliderAdapter(imageUrls)
 
         binding.dotsIndicator.attachTo(binding.viewPagerImages)

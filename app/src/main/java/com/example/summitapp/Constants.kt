@@ -7,4 +7,6 @@ object Constants {
     const val EMAIL_ID  = "emailId"
     const val MOBILE_NO = "mobileNo"
     const val LOGGED_IN = "logged_in"
+
+    const val BASE_URL = "http://10.0.2.2/myshop"
 }

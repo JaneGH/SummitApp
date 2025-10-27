@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.summitapp.Constants.BASE_URL
 import com.example.summitapp.R
 import com.example.summitapp.model.data.Product
 import com.example.summitapp.databinding.ItemProductBinding
@@ -22,7 +23,7 @@ class CartAdapter(
             binding.ratingBar.rating = (product.averageRating ?: 0.0).toFloat()
             binding.etQuantity.setText(quantity.toString())
 
-            val pathImage = "http://10.0.2.2/myshop/images/"
+            val pathImage = "${BASE_URL}/images/"
             val imageUrl = pathImage + product.imageUrl
             Glide.with(binding.root.context)
                 .load(if (!imageUrl.isNullOrEmpty()) imageUrl else R.drawable.dummy_category)
