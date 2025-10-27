@@ -10,6 +10,7 @@ import com.example.summitapp.model.remote.ApiService
 import com.example.summitapp.model.remote.request.LoginRequest
 import com.example.summitapp.model.remote.response.LoginResponse
 import com.example.summitapp.model.repository.LoginRepository
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 class LoginViewModel(application: Application, private val repository: LoginRepository) : ViewModel() {
@@ -32,15 +33,19 @@ class LoginViewModel(application: Application, private val repository: LoginRepo
         _loading.value = true
 
         val request = LoginRequest(emailId = email, password = password)
-        Executors.newSingleThreadExecutor().execute {
-            repository.loginUser(request, onResult = {
-                _loading.postValue(false)
-                _loginResult.postValue(it)
-            }, onError = {
-                _loading.postValue(false)
-                _error.postValue(it)
-            })
+        _loading.value = true
+
+        viewModelScope.launch {
+            try {
+                val result = repository.loginUser(request)
+                _loginResult.value = result
+            } catch (e: Exception) {
+                _error.value = e.message
+            } finally {
+                _loading.value = false
+            }
         }
+
     }
 
     companion object {

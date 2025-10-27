@@ -80,7 +80,7 @@ class RegisterActivity : AppCompatActivity() {
 
         loginViewModel.loginResult.observe(this) { result ->
             result?.let {
-                if (it.status == 0 && it.user != null) {
+                if (it.status == 0) {
                     saveUserToPreferences(it.user)
                     goToMainScreen()
                 } else {

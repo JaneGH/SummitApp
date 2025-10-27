@@ -12,7 +12,7 @@ class LocalProductRepository(private val productDao: ProductDao) {
         return productDao.getAllProducts()
     }
 
-    fun saveProducts(products: List<Product>) {
+    suspend fun saveProducts(products: List<Product>) {
         productDao.clearAll()
         productDao.insertAllProducts(products)
     }

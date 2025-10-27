@@ -5,5 +5,5 @@ import com.example.summitapp.model.data.Product
 
 interface IProductRepository {
     fun getProducts(): LiveData<List<Product>>
-    fun updateProducts(q:String)
+    suspend fun updateProducts(q:String)
 }

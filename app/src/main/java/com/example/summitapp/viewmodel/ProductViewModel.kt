@@ -42,10 +42,15 @@ class ProductViewModel(
             filterProducts()
         }
 
-        productRepository.updateProducts("")
-
-
+        lifecycleOwner.lifecycleScope.launch {
+            try {
+                productRepository.updateProducts("")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
+
 
     fun selectSubcategory(subcategoryId: Int?) {
         selectedSubcategoryId = subcategoryId
@@ -62,14 +67,14 @@ class ProductViewModel(
     }
 
     private fun loadSubcategories() {
-        Thread {
+        viewModelScope.launch {
             try {
                 val subs = subcategoryRepository.getSubcategories(categoryId.toString())
                 _subcategories.postValue(subs)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }.start()
+        }
     }
 
     companion object {

@@ -9,7 +9,7 @@ class SubcategoryRepository(
     private val subcategoryDao: SubcategoryDao
 ) {
 
-    fun getSubcategories(categoryId: String): List<Subcategory> {
+    suspend fun getSubcategories(categoryId: String): List<Subcategory> {
         return try {
             val response = apiService.getSubcategories(categoryId).execute()
             if (response.isSuccessful) {

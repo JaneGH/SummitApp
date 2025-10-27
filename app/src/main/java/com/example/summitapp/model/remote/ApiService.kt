@@ -25,32 +25,32 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("User/register")
-    fun registerUser(
+    suspend fun registerUser(
         @Body request: RegisterRequest
-    ): Call<RegisterResponse>
+    ): RegisterResponse
 
     @Headers("Content-Type: application/json")
     @POST("User/auth")
-    fun loginUser(
+    suspend fun loginUser(
         @Body request: LoginRequest
-    ): Call<LoginResponse>
+    ): LoginResponse
 
     @GET("Category")
-    fun getCategories(
-    ): Call<CategoryResponse>
+    suspend fun getCategories(
+    ): CategoryResponse
 
     @GET("product/search")
-    fun getProducts(
+    suspend fun getProducts(
         @Query("query") query: String
-    ): Call<ProductResponse>
+    ): ProductResponse
 
     @GET("product/details/{productId}")
-    fun getProductDetails(
+    suspend fun getProductDetails(
         @Path("productId") productId: Int
-    ): Call<ProductDetailsResponse>
+    ): ProductDetailsResponse
 
     @GET("subcategory")
-    fun getSubcategories(@Query("category_id") categoryId: String): Call<SubcategoryResponse>
+    suspend fun getSubcategories(@Query("category_id") categoryId: String): Call<SubcategoryResponse>
 
     @Headers("Content-Type: application/json")
     @POST("User/address")

@@ -10,6 +10,7 @@ import com.example.summitapp.model.remote.ApiService
 import com.example.summitapp.model.remote.request.RegisterRequest
 import com.example.summitapp.model.remote.response.RegisterResponse
 import com.example.summitapp.model.repository.RegisterRepository
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 class RegisterViewModel(application: Application, private val repository: RegisterRepository) : ViewModel() {
@@ -43,14 +44,16 @@ class RegisterViewModel(application: Application, private val repository: Regist
             password = password
         )
 
-        Executors.newSingleThreadExecutor().execute {
-            repository.registerUser(request, onResult = {
-                _loading.postValue(false)
-                _registerResult.postValue(it)
-            }, onError = {
-                _loading.postValue(false)
-                _error.postValue(it)
-            })
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                val result = repository.registerUser(request)
+                _registerResult.value = result
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Registration failed"
+            } finally {
+                _loading.value = false
+            }
         }
     }
 

@@ -6,5 +6,5 @@ import com.example.summitapp.model.data.Category
 
 interface ICategoryRepository {
     fun getCategories(): LiveData<List<Category>>
-    fun updateCategories()
+    suspend fun updateCategories()
 }

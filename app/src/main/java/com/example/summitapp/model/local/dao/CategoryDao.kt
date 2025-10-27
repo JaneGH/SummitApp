@@ -26,8 +26,8 @@ interface CategoryDao {
     fun deleteCategory(categoryId: Long)
 
     @Query("DELETE FROM category")
-    fun clearAll()
+    suspend fun clearAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(categories: List<Category>)
+    suspend fun insertAll(categories: List<Category>)
 }

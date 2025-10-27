@@ -1,5 +1,6 @@
 package com.example.summitapp.model.repository.category
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.summitapp.model.data.Category
@@ -14,16 +15,15 @@ class CategoryRepository(
         return localRepository.getCategories()
     }
 
-    override fun updateCategories() {
-        Executors.newSingleThreadExecutor().execute {
-            try {
-                val remoteCategories = remoteRepository.fetchCategories().get()
-                if (!remoteCategories.isNullOrEmpty()) {
-                    localRepository.saveCategories(remoteCategories)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+    override suspend fun updateCategories() {
+        try {
+            val remoteCategories = remoteRepository.fetchCategories()
+
+            if (!remoteCategories.isNullOrEmpty()) {
+                localRepository.saveCategories(remoteCategories)
             }
+        } catch (e: Exception) {
+            Log.e("CategoryUpdate", "Failed to update categories", e)
         }
     }
 }

@@ -14,6 +14,7 @@
         android:paddingTop="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:textColor="@color/dark_gray"
         android:text="Select Payment Options"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -30,7 +31,7 @@
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButtonCOD"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Cash on Delivery"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -44,7 +45,7 @@
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButtonCreditCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Credit Card"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -58,7 +59,7 @@
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButtonPayPal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="PayPal"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -72,7 +73,7 @@
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButtonInternetBanking"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Internet Banking"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

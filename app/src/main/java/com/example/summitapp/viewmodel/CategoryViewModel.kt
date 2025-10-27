@@ -13,13 +13,20 @@ import com.example.summitapp.model.repository.category.CategoryRepository
 import com.example.summitapp.model.repository.category.ICategoryRepository
 import com.example.summitapp.model.repository.category.LocalCategoryRepository
 import com.example.summitapp.model.repository.category.RemoteCategoryRepository
+import kotlinx.coroutines.launch
 
 class CategoryViewModel(application: Application, private val repository: ICategoryRepository) : ViewModel() {
 
     val categories: LiveData<List<Category>> = repository.getCategories()
 
     fun fetchCategories() {
-        repository.updateCategories()
+        viewModelScope.launch {
+            try {
+                repository.updateCategories()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 companion object {
     val Factory: ViewModelProvider.Factory = viewModelFactory {

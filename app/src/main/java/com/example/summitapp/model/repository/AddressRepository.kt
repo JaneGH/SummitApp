@@ -23,23 +23,24 @@ class AddressRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun addAddress(userId: Int, title: String, address: String): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val request = AddressRequest(
-                user_id = userId,
-                title = title,
-                address = address
-            )
+    suspend fun addAddress(userId: Int, title: String, address: String): Boolean =
+        withContext(Dispatchers.IO) {
+            try {
+                val request = AddressRequest(
+                    user_id = userId,
+                    title = title,
+                    address = address
+                )
 
-            val response = apiService.addUserAddress(request)
-            response.isSuccessful
+                val response = apiService.addUserAddress(request)
+                response.isSuccessful
 
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            false
-        } catch (e: Exception) {
-            e.printStackTrace()
-            false
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                false
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
         }
-    }
 }
