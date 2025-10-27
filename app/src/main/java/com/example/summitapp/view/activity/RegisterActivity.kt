@@ -24,6 +24,9 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+
         binding.btnSignUp.setOnClickListener {
             registerViewModel.register(
                 fullName = binding.etFullName.text.toString().trim(),
