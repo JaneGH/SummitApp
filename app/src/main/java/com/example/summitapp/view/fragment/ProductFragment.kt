@@ -23,10 +23,12 @@ class ProductFragment : Fragment() {
     private val viewModel: ProductViewModel by viewModels { ProductViewModel.Factory }
     private lateinit var productAdapter: ProductAdapter
     private var categoryId: Int = 0
+    private var categoryTitle: String = "Category"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { categoryId = it.getInt("category_id", 0) }
+        arguments?.let { categoryTitle = it.getString("category_title", "Category") }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -36,7 +38,7 @@ class ProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "SUPER CART"
+        (activity as? AppCompatActivity)?.supportActionBar?.title = categoryTitle.uppercase()
         setupRecyclerView()
         observeViewModel()
         viewModel.setCategoryId(categoryId, viewLifecycleOwner)
