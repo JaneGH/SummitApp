@@ -15,6 +15,8 @@ import com.example.summitapp.model.data.Cart
 import com.example.summitapp.model.remote.ApiService
 import com.example.summitapp.model.remote.response.ProductDetailsResponse
 import com.example.summitapp.databinding.FragmentProductDetailsBinding
+import com.example.summitapp.model.data.Product
+import com.example.summitapp.view.adapter.ImageSliderAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +47,19 @@ class ProductDetailsFragment : Fragment() {
         loadProductDetails()
     }
 
+    private fun setImagesForProduct(product: Product) {
+        val imageUrls = listOf(
+            "http://10.0.2.2/myshop/images/${product.imageUrl}",
+            "http://10.0.2.2/myshop/images/${product.imageUrl}",
+            "http://10.0.2.2/myshop/images/${product.imageUrl}"
+        )
+
+        binding.viewPagerImages.adapter = ImageSliderAdapter(imageUrls)
+
+        binding.dotsIndicator.attachTo(binding.viewPagerImages)
+
+    }
+
     private fun loadProductDetails() {
         val api = ApiService.getInstance()
         api.getProductDetails(productId).enqueue(object : Callback<ProductDetailsResponse> {
@@ -56,14 +71,10 @@ class ProductDetailsFragment : Fragment() {
                 if (response.isSuccessful) {
                     val product = response.body()?.product ?: return
 
+                    setImagesForProduct(product)
                     binding.tvTitle.text = product.productName
                     binding.tvDescription.text = product.description
                     binding.tvPrice.text = "${product.price}"
-
-                     Glide.with(binding.root.context)
-                        .load("http://10.0.2.2/myshop/images/" + product.imageUrl)
-                        .error(R.drawable.dummy_category)
-                        .into(binding.imageProduct)
 
                     //specifications
                     val specs = product.specifications
