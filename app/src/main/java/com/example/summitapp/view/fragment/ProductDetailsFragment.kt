@@ -1,6 +1,7 @@
 package com.example.summitapp.view.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -77,7 +78,8 @@ class ProductDetailsFragment : Fragment() {
                     setImagesForProduct(product)
                     binding.tvTitle.text = product.productName
                     binding.tvDescription.text = product.description
-                    binding.tvPrice.text = "${product.price}"
+                    binding.tvPrice.text = "$ ${product.price}"
+                    binding.ratingBar.rating = (product.averageRating ?: 0.0).toFloat()
 
                     //specifications
                     val specs = product.specifications
@@ -93,13 +95,14 @@ class ProductDetailsFragment : Fragment() {
                             val titleView = TextView(requireContext()).apply {
                                 text = spec.title
                                 textSize = 14f
-                                setPadding(8, 8, 8, 8)
+                                setTextColor(Color.GRAY)
+                                setPadding(8, 16, 8, 16)
                             }
 
                             val valueView = TextView(requireContext()).apply {
                                 text = spec.specification
                                 textSize = 14f
-                                setPadding(8, 8, 8, 8)
+                                setPadding(8, 16, 8, 16)
                             }
 
                             row.addView(titleView)
